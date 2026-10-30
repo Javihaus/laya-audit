@@ -14,17 +14,23 @@ Accuracy does not tell you **which** answers you can trust. If you put a model i
 
 Points 2 and 3 are not specific to Laya. Two general-purpose LLMs and a similarity baseline fail in the same way. The issue is what the benchmark measures: a model can win on accuracy and still give you no usable signal about when to trust it.
 
-![Does each system know when it is wrong?](figures/auroc_vs_fpr95.png)
+![Average of nine datasets](figures/summary_auroc_vs_fpr95.png)
+
+On average over the nine datasets, all four systems land in the same place: their confidence ranks answers only slightly better than chance, and at a threshold that keeps 95% of the right answers, 84% to 87% of the errors still pass.
+
+![Dataset by dataset](figures/auroc_vs_fpr95.png)
 
 ![Published vs measured accuracy](figures/accuracy_published_vs_measured.png)
 
-## How to read the main figure
+## How to read the figures
 
-Each point is one system on one dataset.
+In the dataset-by-dataset figure each point is one system on one dataset. In the summary figure the large points are averages.
 
 - **AUROC** (vertical): the chance that a random right answer gets more confidence than a random wrong one. 0.5 means confidence carries no information. Higher is better.
 - **FPR at 95% recall** (horizontal): set the threshold so you keep 95% of the right answers. This is the share of wrong answers that still pass. Lower is better.
-- The blue area is where confidence is good enough to act on. The red area is where it tells you little.
+- **Green**: AUROC above 0.7 and FPR below 0.5. Confidence you can act on.
+- **Orange**: AUROC above 0.7 but FPR above 0.5. Confidence ranks the answers, but at a safe threshold too many errors still pass.
+- **Red**: AUROC below 0.7. Confidence tells you little.
 
 ## What was tested
 
